@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giftly — Personalized Gift Store</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">G</div>
+          <div>
+            <div class="brand-name">Giftly</div>
+            <div class="brand-tag">Personalized Gift Store</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="#shop" class="nav-link">Shop</a>
+          <a href="#how" class="nav-link">Customize</a>
+          <button class="cart-btn" type="button" id="openCartBtn" aria-haspopup="dialog">
+            Cart
+            <span class="pill" id="cartCount" aria-label="Items in cart">0</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <h1>Thoughtful gifts, made personal.</h1>
+            <p class="muted">
+              Upload a photo, add a message, and create something uniquely yours — perfect for birthdays,
+              anniversaries, and more.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#shop">Shop gifts</a>
+              <a class="btn btn-ghost" href="#how">How customization works</a>
+            </div>
+
+            <div class="chips" aria-label="Occasions">
+              <button class="chip is-active" type="button" data-occasion="All">All</button>
+              <button class="chip" type="button" data-occasion="Birthday">Birthday</button>
+              <button class="chip" type="button" data-occasion="Anniversary">Anniversary</button>
+              <button class="chip" type="button" data-occasion="Wedding">Wedding</button>
+              <button class="chip" type="button" data-occasion="Baby">Baby</button>
+            </div>
+          </div>
+
+          <div class="hero-card" role="img" aria-label="Pastel gift preview">
+            <div class="preview">
+              <div class="preview-top">
+                <div class="dot dot-pink"></div>
+                <div class="dot dot-lav"></div>
+                <div class="dot dot-blue"></div>
+              </div>
+              <div class="preview-body">
+                <div class="preview-gift">
+                  <div class="gift-box"></div>
+                  <div class="gift-ribbon"></div>
+                </div>
+                <div class="preview-text">
+                  <div class="kicker">New</div>
+                  <div class="headline">Custom Photo Mug</div>
+                  <div class="sub">Soft matte finish • Ships in 48h</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="shop">
+        <div class="container section-head">
+          <div>
+            <h2>Shop</h2>
+            <p class="muted">Pick a gift, then personalize it with a photo and message.</p>
+          </div>
+
+          <div class="filters">
+            <label class="field">
+              <span class="label">Search</span>
+              <input id="searchInput" class="input" type="search" placeholder="Try “mug”, “frame”, “card”" />
+            </label>
+            <label class="field">
+              <span class="label">Category</span>
+              <select id="categorySelect" class="input">
+                <option value="All">All</option>
+                <option value="Mugs">Mugs</option>
+                <option value="Frames">Frames</option>
+                <option value="Cards">Cards</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="container">
+          <div id="productGrid" class="grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <div class="container two-col">
+          <div class="panel">
+            <h2>Customize Your Gift</h2>
+            <p class="muted">
+              Choose a product, upload a photo, add a short message, and preview it instantly before adding to cart.
+            </p>
+            <ol class="steps">
+              <li><strong>Upload</strong> a photo (JPG/PNG)</li>
+              <li><strong>Add</strong> your custom text</li>
+              <li><strong>Preview</strong> and add to cart</li>
+            </ol>
+          </div>
+          <div class="panel soft">
+            <div class="mini-preview">
+              <div class="mini-frame" id="miniFrame">
+                <div class="mini-img" id="miniImg" aria-hidden="true"></div>
+                <div class="mini-text" id="miniText">Your message here</div>
+              </div>
+              <div class="mini-fields">
+                <label class="field">
+                  <span class="label">Try a message</span>
+                  <input id="miniMessage" class="input" maxlength="30" value="Happy Birthday, Aanya!" />
+                </label>
+                <button id="miniRandomize" class="btn btn-ghost" type="button">Randomize</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="muted">© <span id="year"></span> Giftly</div>
+        <div class="muted">Minimal • Pastel • Responsive</div>
+      </div>
+    </footer>
+
+    <!-- Cart Drawer -->
+    <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+    <aside class="drawer" id="cartDrawer" role="dialog" aria-label="Cart" aria-modal="true" hidden>
+      <div class="drawer-head">
+        <div>
+          <div class="drawer-title">Your cart</div>
+          <div class="muted" id="cartSub">0 items</div>
+        </div>
+        <button class="icon-btn" id="closeCartBtn" type="button" aria-label="Close cart">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <div id="cartItems" class="cart-items"></div>
+        <div id="emptyCart" class="empty" hidden>
+          <div class="empty-title">Cart is empty</div>
+          <div class="muted">Add a personalized gift to get started.</div>
+        </div>
+      </div>
+
+      <div class="drawer-foot">
+        <div class="totals">
+          <div class="muted">Total</div>
+          <div class="total" id="cartTotal">$0</div>
+        </div>
+        <button class="btn btn-primary btn-full" id="checkoutBtn" type="button">Checkout (dummy)</button>
+        <div class="muted small" id="checkoutNote"></div>
+      </div>
+    </aside>
+
+    <!-- Product Modal -->
+    <div class="modal-backdrop" id="modalBackdrop" hidden></div>
+    <section class="modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details" hidden>
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" id="modalTitle">Product</div>
+          <div class="muted" id="modalMeta"></div>
+        </div>
+        <button class="icon-btn" id="closeModalBtn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="product-preview">
+            <div class="preview-surface" id="previewSurface">
+              <img id="previewImage" alt="" />
+              <div class="overlay-text" id="previewText"></div>
+            </div>
+            <div class="muted small">Image + text preview</div>
+          </div>
+
+          <div class="product-config">
+            <div class="panel">
+              <div class="panel-title">Customize Your Gift</div>
+              <label class="field">
+                <span class="label">Custom text</span>
+                <input class="input" id="customTextInput" maxlength="30" placeholder="e.g., Love you always" />
+              </label>
+
+              <label class="field">
+                <span class="label">Upload image</span>
+                <input class="input" id="imageInput" type="file" accept="image/*" />
+                <span class="help muted small">We only use it for the preview in this demo.</span>
+              </label>
+
+              <div class="row">
+                <button class="btn btn-primary" id="addToCartBtn" type="button">Add to cart</button>
+                <button class="btn btn-ghost" id="toggleWishlistBtn" type="button">Wishlist</button>
+              </div>
+              <div class="muted small" id="addHint"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chatbase (bottom-right) -->
+    <script>
+      (function () {
+        if (window.__giftly_chatbase_loaded) return;
+        window.__giftly_chatbase_loaded = true;
+        var s = document.createElement("script");
+        s.src = "https://www.chatbase.co/embed.min.js";
+        s.defer = true;
+        s.setAttribute("chatbotId", "zzwfo9SljV6kXBmgywbRK");
+        s.setAttribute("domain", "www.chatbase.co");
+        document.body.appendChild(s);
+      })();
+    </script>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
